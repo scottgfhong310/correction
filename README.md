@@ -74,6 +74,7 @@
 - `public/i18n.js` — i18n 引擎（`t` / `apply` / `set` / `register`）。
 - `public/locales/<code>.js` — 各語言字典，載入時自我註冊，例如 `I18n.register('ja', { … }, '日本語')`。
 - 語系切換器依**已註冊的語言自動產生**。
+- 日文介面會載入 **Noto Sans JP**（字檔僅在 `lang=ja` 時下載），確保日文漢字字形跨平台一致。
 
 **新增一個語言**只要：在 `public/locales/` 加一個 `xx.js`、並在 `index.html` 引入它——引擎、切換器、頁面程式都不用改。
 

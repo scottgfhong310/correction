@@ -13,6 +13,10 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
 
+  <!-- Noto Sans JP（僅日文介面套用，字檔在 lang=ja 時才下載） -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap">
+
   <!-- 依賴 -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -57,6 +61,22 @@
     .save-bar .spacer { flex: 1; }
     #langSwitch .lang-link { padding: 0 10px; opacity: .65; }
     #langSwitch .lang-link.active { opacity: 1; font-weight: 700; text-decoration: underline; }
+
+    /* 日文介面：以 Noto Sans JP 提供一致的日文字形（僅 lang=ja 生效） */
+    html[lang="ja"] body,
+    html[lang="ja"] input,
+    html[lang="ja"] select,
+    html[lang="ja"] button,
+    html[lang="ja"] .btn,
+    html[lang="ja"] .btn-flat,
+    html[lang="ja"] .select-dropdown,
+    html[lang="ja"] .toast {
+      font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Roboto, sans-serif;
+    }
+    html[lang="ja"] textarea.doc,
+    html[lang="ja"] table.entries textarea {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Noto Sans JP", monospace;
+    }
   </style>
 </head>
 
