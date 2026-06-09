@@ -54,7 +54,7 @@
 ```json
 [
   {
-    "alias": ["示範字集"],
+    "alias": "示範字集",
     "file": "sample.json",
     "description": "示範用：常見的同音／形近錯字校正字集"
   }

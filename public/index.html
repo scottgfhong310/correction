@@ -204,7 +204,7 @@
         $select.empty();
         $select.append('<option value="" disabled selected>請選擇校正資料來源…</option>');
         list.forEach(function (item, idx) {
-          var label = (item.alias && item.alias.length ? item.alias.join(' / ') : item.file);
+          var label = (Array.isArray(item.alias) ? item.alias.join(' / ') : item.alias) || item.file;
           $select.append($('<option>').val(idx).text(label));
         });
         $select.formSelect();

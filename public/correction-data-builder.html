@@ -160,7 +160,7 @@
           }
           $select.empty().append('<option value="" disabled' + (selectIdx == null ? ' selected' : '') + '>請選擇校正資料來源…</option>');
           list.forEach(function (item, idx) {
-            var label = (item.alias && item.alias.length ? item.alias.join(' / ') : item.file);
+            var label = (Array.isArray(item.alias) ? item.alias.join(' / ') : item.alias) || item.file;
             var opt = $('<option>').val(idx).text(label + '（' + item.file + '）');
             if (selectIdx === idx) opt.prop('selected', true);
             $select.append(opt);
@@ -299,7 +299,7 @@
         }).done(function () {
           // 2) 加入清單並寫回
           var newList = state.sources.slice();
-          newList.push({ alias: alias ? [alias] : [file], file: file, description: desc });
+          newList.push({ alias: alias || file, file: file, description: desc });
           $.ajax({
             url: '/api/correction/list',
             type: 'PUT', contentType: 'application/json', data: JSON.stringify(newList)
