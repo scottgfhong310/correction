@@ -113,6 +113,64 @@ correction/
 
 ---
 
+## 校正引擎：`CorrectionLib`
+
+`public/correction-lib.js` 是這個專案的核心——一個**不依賴任何套件**（只用原生 `fetch`）的純前端校正引擎。載入後會掛在全域 `window.CorrectionLib`，可單獨抽出，套用到任何需要「字集替換」的頁面。
+
+```html
+<script src="correction-lib.js"></script>
+<script>
+  // 直接給規則套用（不需要伺服器）
+  var rules = [
+    { source: ["佈署", "布署"], target: "部署" },
+    { source: ["想象"],         target: "想像" }
+  ];
+  var r = CorrectionLib.apply("儘快佈署，想象很好", rules);
+  console.log(r.text);   // → "儘快部署，想像很好"
+  console.log(r.total);  // → 2
+  console.log(r.stats);  // → [{source:"佈署",target:"部署",count:1}, {source:"想象",target:"想像",count:1}]
+</script>
+```
+
+### API
+
+| 方法 | 簽章 | 說明 |
+| --- | --- | --- |
+| `loadList(url?)` | `(url='./correction-data.json') → Promise<Array>` | 載入資料來源清單。自動加上 cache-busting 確保讀到最新內容。 |
+| `loadSource(file, base?)` | `(file, base='./correction-data/') → Promise<Array>` | 載入單一校正字集（`base + file`）。同樣 cache-busting。 |
+| `apply(text, rules)` | `→ { text, stats, total }` | 套用校正。詳見下方。 |
+| `timestamp(date?)` | `(date=new Date()) → "yyyyMMddHHmmss"` | 產生本地時間戳。 |
+| `stampFilename(name, ts?)` | `(name, ts=timestamp()) → string` | 為下載檔名加時間戳：主檔名結尾**已有**時間戳則**替換**，否則在副檔名前**附加**。 |
+
+### `apply(text, rules)`
+
+以**字面字串**（literal，非正規表示式）**逐條依序**全域替換：每條規則 `source` 陣列中的每個字串都會被換成該規則的 `target`。
+
+回傳物件：
+
+| 欄位 | 型別 | 說明 |
+| --- | --- | --- |
+| `text` | `string` | 校正後的完整文字 |
+| `stats` | `Array<{ source, target, count }>` | 每條**有命中**的替換與次數 |
+| `total` | `number` | 總替換次數 |
+
+### 從伺服器載入字集後套用
+
+```js
+// 1) 載入清單 → 取第一個字集 → 載入它 → 套用
+const list  = await CorrectionLib.loadList();              // [{ alias, file, description }, ...]
+const rules = await CorrectionLib.loadSource(list[0].file);
+const out   = CorrectionLib.apply(原始逐字稿, rules);
+
+// 2) 以原檔名 + 校正時間戳命名下載
+const name = CorrectionLib.stampFilename("逐字稿.txt");     // → "逐字稿-20260610153000.txt"
+// 逐字稿-20250101000000.txt → 逐字稿-20260610153000.txt（時間戳被替換，而非重複附加）
+```
+
+> 引擎本身與 UI 無關，`index.html` 與 `correction-data-builder.html` 都只是它的前端外殼。
+
+---
+
 ## License
 
 [MIT](./LICENSE) © 2026 Scott G.F. Hong
