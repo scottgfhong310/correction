@@ -1,0 +1,26 @@
+# 依賴
+node_modules/
+
+# 環境變數
+.env
+.env.*
+
+# 日誌
+*.log
+
+# 系統檔
+.DS_Store
+Thumbs.db
+
+# 編輯器 / 工具
+.vscode/
+.idea/
+.claude/
+
+# 備份（校正字集寫檔時產生）
+*.bak
+.bak/
+
+# 使用者上傳的待校正檔案（保留資料夾，不收內容）
+/public/upload/correction/*
+!/public/upload/correction/.gitkeep

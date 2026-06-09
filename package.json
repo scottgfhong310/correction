@@ -1,0 +1,31 @@
+{
+  "name": "correction",
+  "version": "0.1.0",
+  "description": "協助校正 speech-to-text 逐字稿的 WebApp：依校正字集把因發音被錯判的字詞批次替換成正確字詞。",
+  "keywords": [
+    "speech-to-text",
+    "transcript",
+    "correction",
+    "homophone",
+    "express",
+    "materialize"
+  ],
+  "license": "MIT",
+  "author": "Scott G.F. Hong",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/<your-account>/correction.git"
+  },
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "morgan": "^1.10.0",
+    "multer": "^2.0.0"
+  }
+}
