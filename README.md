@@ -65,6 +65,16 @@
 
 ---
 
+## 介面語言（i18n）
+
+介面支援 **繁體中文 / English**，右上角可即時切換，選擇會記在瀏覽器（`localStorage`）。也可用網址參數強制語言：`?lang=en` 或 `?lang=zh-Hant`。
+
+- 語系字典與切換邏輯都在 `public/i18n.js`（無相依套件）；新增語言＝在字典加一組鍵。
+- 校正字集本身屬於**資料內容**，不會被翻譯。
+- 目前 `index.html` 已完整雙語；`correction-data-builder.html` 之後再補。
+
+---
+
 ## 安裝與啟動
 
 需求：Node.js >= 16。
