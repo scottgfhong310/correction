@@ -7,6 +7,8 @@
 - 後端：Node.js + Express（極簡，只負責靜態檔、檔案上傳與字集存檔）
 - 前端：jQuery + Materialize CSS + Lodash（皆以 CDN 載入）
 
+![Correction 主頁 — 上傳逐字稿、選擇校正字集、一鍵校正，右側即時顯示校正結果與每條替換的次數](docs/screenshot.png)
+
 ---
 
 ## 功能
