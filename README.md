@@ -67,11 +67,17 @@
 
 ## 介面語言（i18n）
 
-介面支援 **繁體中文 / English**，右上角可即時切換，選擇會記在瀏覽器（`localStorage`）。也可用網址參數強制語言：`?lang=en` 或 `?lang=zh-Hant`。
+介面支援 **繁體中文 / English / 日本語**，右上角可即時切換，選擇會記在瀏覽器（`localStorage`）。也可用網址參數強制語言，例如 `?lang=ja`、`?lang=en`、`?lang=zh-Hant`。
 
-- 語系字典與切換邏輯都在 `public/i18n.js`（無相依套件）；新增語言＝在字典加一組鍵。
-- 校正字集本身屬於**資料內容**，不會被翻譯。
-- 目前 `index.html` 已完整雙語；`correction-data-builder.html` 之後再補。
+字典與引擎分離，皆為純前端（無相依套件、無 build）：
+
+- `public/i18n.js` — i18n 引擎（`t` / `apply` / `set` / `register`）。
+- `public/locales/<code>.js` — 各語言字典，載入時自我註冊，例如 `I18n.register('ja', { … }, '日本語')`。
+- 語系切換器依**已註冊的語言自動產生**。
+
+**新增一個語言**只要：在 `public/locales/` 加一個 `xx.js`、並在 `index.html` 引入它——引擎、切換器、頁面程式都不用改。
+
+> 校正字集本身屬於**資料內容**，不會被翻譯。目前 `index.html` 已三語；`correction-data-builder.html` 之後再補。
 
 ---
 
