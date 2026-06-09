@@ -1,6 +1,6 @@
 /* English (en) */
 I18n.register('en', {
-  'title.page': 'Correction — Document Correction',
+  'title.page': 'Correction — Plain-text Correction',
   'nav.builder': 'Edit correction sets',
   'toolbar.sourceLabel': 'Correction source (correction-data)',
   'btn.run': 'Run correction',

@@ -1,6 +1,6 @@
 /* 繁體中文（zh-Hant） */
 I18n.register('zh-Hant', {
-  'title.page': 'Correction — 文件校正',
+  'title.page': 'Correction — 純文字校正',
   'nav.builder': '編輯校正字集',
   'toolbar.sourceLabel': '校正資料來源（correction-data）',
   'btn.run': '執行校正',

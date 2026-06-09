@@ -1,6 +1,6 @@
 /* 日本語（ja） */
 I18n.register('ja', {
-  'title.page': 'Correction — 文書校正',
+  'title.page': 'Correction — テキスト校正',
   'nav.builder': '校正セットを編集',
   'toolbar.sourceLabel': '校正データ（correction-data）',
   'btn.run': '校正を実行',
