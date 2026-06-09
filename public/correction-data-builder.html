@@ -21,6 +21,12 @@
   <!-- CorrectionLib -->
   <script src="./correction-lib.js"></script>
 
+  <!-- i18n（引擎 + 語言檔） -->
+  <script src="./i18n.js"></script>
+  <script src="./locales/zh-Hant.js"></script>
+  <script src="./locales/en.js"></script>
+  <script src="./locales/ja.js"></script>
+
   <style>
     body { padding-bottom: 80px; }
     header { position: sticky; top: 0; z-index: 1000; }
@@ -49,18 +55,21 @@
       display: flex; gap: 12px; align-items: center;
     }
     .save-bar .spacer { flex: 1; }
+    #langSwitch .lang-link { padding: 0 10px; opacity: .65; }
+    #langSwitch .lang-link.active { opacity: 1; font-weight: 700; text-decoration: underline; }
   </style>
 </head>
 
-<body>
+<body data-i18n-doctitle="b.title.page">
   <header>
     <nav>
       <div class="nav-wrapper deep-orange darken-1">
         <a class="brand-logo" style="padding-left:16px;">
-          <i class="material-icons left">build</i>校正字集編輯
+          <i class="material-icons left">build</i><span data-i18n="b.brand">校正字集編輯</span>
         </a>
+        <ul id="langSwitch" class="right"><!-- 依 I18n.langs 自動產生 --></ul>
         <ul class="right hide-on-med-and-down">
-          <li><a href="./index.html"><i class="material-icons left">spellcheck</i>回校正頁</a></li>
+          <li><a href="./index.html"><i class="material-icons left">spellcheck</i><span data-i18n="b.nav.back">回校正頁</span></a></li>
           <li style="width:16px;">&nbsp;</li>
         </ul>
       </div>
@@ -73,12 +82,12 @@
         <div class="toolbar">
           <div class="input-field">
             <select id="sourceSelect">
-              <option value="" disabled selected>載入中…</option>
+              <option value="" disabled selected data-i18n="opt.loading">載入中…</option>
             </select>
-            <label>選擇校正資料來源（correction-data）</label>
+            <label data-i18n="b.toolbar.sourceLabel">選擇校正資料來源（correction-data）</label>
           </div>
           <a id="btnNewSource" class="btn-flat waves-effect">
-            <i class="material-icons left">add_circle</i>新增資料來源
+            <i class="material-icons left">add_circle</i><span data-i18n="b.btn.newSource">新增資料來源</span>
           </a>
           <span id="fileMeta" class="hint"></span>
         </div>
@@ -87,21 +96,21 @@
 
     <div class="card" id="editorCard" style="display:none;">
       <div class="card-content">
-        <span class="card-title">條目編輯
-          <span class="hint">— <code>source</code> 每行一個字詞，皆會被替換成 <code>target</code></span>
+        <span class="card-title"><span data-i18n="b.card.entries">條目編輯</span>
+          <span class="hint" data-i18n-html="b.entriesHint">— <code>source</code> 每行一個字詞，皆會被替換成 <code>target</code></span>
         </span>
         <table class="entries striped">
           <thead>
             <tr>
-              <th class="col-src">source（原字詞，每行一個）</th>
-              <th class="col-tgt">target（校正為）</th>
+              <th class="col-src" data-i18n="b.th.source">source（原字詞，每行一個）</th>
+              <th class="col-tgt" data-i18n="b.th.target">target（校正為）</th>
               <th class="col-act"></th>
             </tr>
           </thead>
           <tbody id="entryBody"></tbody>
         </table>
         <a id="btnAddRow" class="btn-flat waves-effect teal-text" style="margin-top:8px;">
-          <i class="material-icons left">add</i>新增條目
+          <i class="material-icons left">add</i><span data-i18n="b.btn.addRow">新增條目</span>
         </a>
       </div>
     </div>
@@ -111,43 +120,85 @@
   <div class="save-bar" id="saveBar" style="display:none;">
     <span id="saveStatus" class="hint"></span>
     <span class="spacer"></span>
-    <a id="btnReload" class="btn-flat waves-effect"><i class="material-icons left">refresh</i>重新載入</a>
-    <a id="btnSave" class="btn deep-orange waves-effect waves-light"><i class="material-icons left">save</i>儲存</a>
+    <a id="btnReload" class="btn-flat waves-effect"><i class="material-icons left">refresh</i><span data-i18n="btn.reload">重新載入</span></a>
+    <a id="btnSave" class="btn deep-orange waves-effect waves-light"><i class="material-icons left">save</i><span data-i18n="b.btn.save">儲存</span></a>
   </div>
 
   <!-- 新增資料來源 Modal -->
   <div id="newSourceModal" class="modal">
     <div class="modal-content">
-      <h5>新增校正資料來源</h5>
+      <h5 data-i18n="b.modal.title">新增校正資料來源</h5>
       <div class="input-field">
-        <input id="nsFile" type="text" placeholder="例如 my-words.json">
-        <label for="nsFile" class="active">檔名（.json）</label>
+        <input id="nsFile" type="text" data-i18n-placeholder="b.modal.filePh" placeholder="例如 my-words.json">
+        <label for="nsFile" class="active" data-i18n="b.modal.fileLabel">檔名（.json）</label>
       </div>
       <div class="input-field">
-        <input id="nsAlias" type="text" placeholder="例如 我的字集">
-        <label for="nsAlias" class="active">別名 alias</label>
+        <input id="nsAlias" type="text" data-i18n-placeholder="b.modal.aliasPh" placeholder="例如 我的字集">
+        <label for="nsAlias" class="active" data-i18n="b.modal.aliasLabel">別名 alias</label>
       </div>
       <div class="input-field">
         <input id="nsDesc" type="text">
-        <label for="nsDesc" class="active">說明 description（可空）</label>
+        <label for="nsDesc" class="active" data-i18n="b.modal.descLabel">說明 description（可空）</label>
       </div>
     </div>
     <div class="modal-footer">
-      <a href="#!" class="modal-close btn-flat">取消</a>
-      <a href="#!" id="nsCreate" class="btn deep-orange waves-effect">建立</a>
+      <a href="#!" class="modal-close btn-flat" data-i18n="b.modal.cancel">取消</a>
+      <a href="#!" id="nsCreate" class="btn deep-orange waves-effect" data-i18n="b.modal.create">建立</a>
     </div>
   </div>
 
   <script>
     $(function () {
       var BASE = './correction-data/';
-      var state = { sources: [], current: null /* {idx,item} */ };
+      var state = { sources: [], current: null, statusThunk: null };
 
       var $select = $('#sourceSelect');
       M.Modal.init(document.getElementById('newSourceModal'));
 
       // 網址帶入的 ?file= → 開啟後自動選取對應的 correction-data
       var wantFile = new URLSearchParams(location.search).get('file');
+
+      // ---- i18n：初始套用、語系切換器、動態重繪 ----
+      I18n.apply(document);
+      function buildLangSwitch() {
+        var $s = $('#langSwitch').empty();
+        I18n.langs.forEach(function (code) {
+          $s.append('<li><a href="#!" class="lang-link" data-lang="' + code + '">' + _.escape(I18n.name(code)) + '</a></li>');
+        });
+      }
+      function paintLang() {
+        $('#langSwitch a').removeClass('active');
+        $('#langSwitch a[data-lang="' + I18n.lang + '"]').addClass('active');
+      }
+      buildLangSwitch();
+      paintLang();
+      $('#langSwitch').on('click', 'a', function (e) {
+        e.preventDefault();
+        I18n.set($(this).data('lang'));
+      });
+      // 儲存列狀態以 thunk 記住，切換語系時可重繪
+      function setStatus(thunk) {
+        state.statusThunk = thunk;
+        $('#saveStatus').text(thunk ? thunk() : '');
+      }
+      document.addEventListener('i18n:changed', function () {
+        paintLang();
+        renderSelectOptions(state.current ? state.current.idx : null);
+        if (state.statusThunk) $('#saveStatus').text(state.statusThunk());
+        // 已存在的條目列由 set() 內的 I18n.apply(document) 重套 placeholder / title
+      });
+
+      // ---- 下拉選項（loadList 與語系切換共用）----
+      function renderSelectOptions(selectIdx) {
+        $select.empty().append('<option value="" disabled' + (selectIdx == null ? ' selected' : '') + '>' + I18n.t('opt.selectSource') + '</option>');
+        state.sources.forEach(function (item, idx) {
+          var label = (Array.isArray(item.alias) ? item.alias.join(' / ') : item.alias) || item.file;
+          var opt = $('<option>').val(idx).text(label + I18n.t('meta.fileParen', { file: item.file }));
+          if (selectIdx === idx) opt.prop('selected', true);
+          $select.append(opt);
+        });
+        $select.formSelect();
+      }
 
       // ---- 載入清單 ----
       function loadList(selectIdx) {
@@ -158,17 +209,10 @@
             var wi = list.findIndex(function (it) { return it.file === wantFile; });
             if (wi >= 0) selectIdx = wi;
           }
-          $select.empty().append('<option value="" disabled' + (selectIdx == null ? ' selected' : '') + '>請選擇校正資料來源…</option>');
-          list.forEach(function (item, idx) {
-            var label = (Array.isArray(item.alias) ? item.alias.join(' / ') : item.alias) || item.file;
-            var opt = $('<option>').val(idx).text(label + '（' + item.file + '）');
-            if (selectIdx === idx) opt.prop('selected', true);
-            $select.append(opt);
-          });
-          $select.formSelect();
+          renderSelectOptions(selectIdx);
           if (selectIdx != null) $select.trigger('change');
         }).catch(function (err) {
-          M.toast({ html: '清單載入失敗：' + err.message, classes: 'red' });
+          M.toast({ html: I18n.t('toast.listLoadFailed', { msg: err.message }), classes: 'red' });
         });
       }
       loadList();
@@ -187,26 +231,31 @@
         CorrectionLib.loadSource(item.file, BASE).then(function (rules) {
           renderEntries(rules);
           $('#editorCard, #saveBar').show();
-          $('#saveStatus').text('已載入 ' + rules.length + ' 條（' + item.file + '）');
+          var n = rules.length, file = item.file;
+          setStatus(function () { return I18n.t('b.status.loaded', { n: n, file: file }); });
         }).catch(function (err) {
-          M.toast({ html: '字集載入失敗：' + err.message, classes: 'red' });
+          M.toast({ html: I18n.t('toast.sourceLoadFailed', { msg: err.message }), classes: 'red' });
         });
       }
 
-      function rowHtml(sourceArr, target) {
-        var srcText = (sourceArr || []).join('\n');
+      function rowHtml() {
         return '<tr>' +
-          '<td class="col-src"><textarea class="src" placeholder="一行一個原字詞"></textarea></td>' +
-          '<td class="col-tgt"><input class="tgt" type="text" placeholder="校正後字詞"></td>' +
-          '<td class="col-act"><a href="#!" class="del-row red-text" title="刪除"><i class="material-icons">delete</i></a></td>' +
+          '<td class="col-src"><textarea class="src" data-i18n-placeholder="b.ph.src" placeholder="一行一個原字詞"></textarea></td>' +
+          '<td class="col-tgt"><input class="tgt" type="text" data-i18n-placeholder="b.ph.tgt" placeholder="校正後字詞"></td>' +
+          '<td class="col-act"><a href="#!" class="del-row red-text" data-i18n-title="b.del.title" title="刪除"><i class="material-icons">delete</i></a></td>' +
           '</tr>';
+      }
+      function newRow() {
+        var $row = $(rowHtml());
+        I18n.apply($row[0]); // 讓新列的 placeholder / title 符合目前語系
+        return $row;
       }
 
       function renderEntries(rules) {
         var $body = $('#entryBody').empty();
         rules.forEach(function (r) {
           var src = Array.isArray(r.source) ? r.source : (r.source != null ? [r.source] : []);
-          var $row = $(rowHtml());
+          var $row = newRow();
           $row.find('.src').val(src.join('\n'));
           $row.find('.tgt').val(r.target == null ? '' : r.target);
           $body.append($row);
@@ -215,7 +264,7 @@
       }
 
       function addRow() {
-        var $row = $(rowHtml());
+        var $row = newRow();
         $('#entryBody').append($row);
         $row.find('.src').focus();
       }
@@ -242,8 +291,8 @@
 
       function validate(rules) {
         for (var i = 0; i < rules.length; i++) {
-          if (!rules[i].source.length) return '第 ' + (i + 1) + ' 條缺少 source';
-          if (!rules[i].target) return '第 ' + (i + 1) + ' 條缺少 target';
+          if (!rules[i].source.length) return I18n.t('b.err.missingSource', { i: i + 1 });
+          if (!rules[i].target) return I18n.t('b.err.missingTarget', { i: i + 1 });
         }
         return null;
       }
@@ -255,20 +304,20 @@
         var err = validate(rules);
         if (err) { M.toast({ html: err, classes: 'red' }); return; }
         var file = state.current.item.file;
-        $('#saveStatus').text('儲存中…');
+        setStatus(function () { return I18n.t('b.status.saving'); });
         $.ajax({
           url: '/api/correction/sources/' + encodeURIComponent(file),
           type: 'PUT',
           contentType: 'application/json',
           data: JSON.stringify(rules)
         }).done(function (resp) {
-          var bak = resp.backupPath ? '（已備份）' : '';
-          $('#saveStatus').text('已儲存 ' + rules.length + ' 條 ' + bak);
-          M.toast({ html: '已儲存：' + file, classes: 'green' });
+          var n = rules.length, backed = !!resp.backupPath;
+          setStatus(function () { return I18n.t('b.status.saved', { n: n }) + (backed ? ' ' + I18n.t('b.status.backedUp') : ''); });
+          M.toast({ html: I18n.t('b.toast.saved', { file: file }), classes: 'green' });
         }).fail(function (xhr) {
-          var msg = (xhr.responseJSON && xhr.responseJSON.error) || xhr.statusText || '儲存失敗';
-          $('#saveStatus').text('儲存失敗');
-          M.toast({ html: '儲存失敗：' + msg, classes: 'red' });
+          var msg = (xhr.responseJSON && xhr.responseJSON.error) || xhr.statusText || I18n.t('b.status.saveFailed');
+          setStatus(function () { return I18n.t('b.status.saveFailed'); });
+          M.toast({ html: I18n.t('b.toast.saveFailed', { msg: msg }), classes: 'red' });
         });
       });
 
@@ -286,11 +335,11 @@
         var file = $('#nsFile').val().trim();
         var alias = $('#nsAlias').val().trim();
         var desc = $('#nsDesc').val().trim();
-        if (!file) { M.toast({ html: '請輸入檔名', classes: 'red' }); return; }
+        if (!file) { M.toast({ html: I18n.t('b.err.noFile'), classes: 'red' }); return; }
         if (!/\.json$/i.test(file)) file += '.json';
-        if (path_unsafe(file)) { M.toast({ html: '檔名不合法', classes: 'red' }); return; }
+        if (path_unsafe(file)) { M.toast({ html: I18n.t('b.err.badFile'), classes: 'red' }); return; }
         if (_.some(state.sources, { file: file })) {
-          M.toast({ html: '檔名已存在', classes: 'orange' }); return;
+          M.toast({ html: I18n.t('b.err.fileExists'), classes: 'orange' }); return;
         }
         // 1) 建立空字集檔
         $.ajax({
@@ -305,16 +354,16 @@
             type: 'PUT', contentType: 'application/json', data: JSON.stringify(newList)
           }).done(function () {
             M.Modal.getInstance(document.getElementById('newSourceModal')).close();
-            M.toast({ html: '已建立：' + file, classes: 'green' });
+            M.toast({ html: I18n.t('b.toast.created', { file: file }), classes: 'green' });
             loadList(newList.length - 1); // 重新載入並選取新項目
-          }).fail(failToast('寫入清單失敗'));
-        }).fail(failToast('建立檔案失敗'));
+          }).fail(failToast('b.err.writeListFailed'));
+        }).fail(failToast('b.err.createFileFailed'));
       });
 
-      function failToast(prefix) {
+      function failToast(key) {
         return function (xhr) {
-          var msg = (xhr.responseJSON && xhr.responseJSON.error) || xhr.statusText || prefix;
-          M.toast({ html: prefix + '：' + msg, classes: 'red' });
+          var msg = (xhr.responseJSON && xhr.responseJSON.error) || xhr.statusText || I18n.t(key);
+          M.toast({ html: I18n.t('b.toast.failPattern', { label: I18n.t(key), msg: msg }), classes: 'red' });
         };
       }
 
