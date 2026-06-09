@@ -77,7 +77,7 @@
 
 **新增一個語言**只要：在 `public/locales/` 加一個 `xx.js`、並在 `index.html` 引入它——引擎、切換器、頁面程式都不用改。
 
-> 校正字集本身屬於**資料內容**，不會被翻譯。目前 `index.html` 已三語；`correction-data-builder.html` 之後再補。
+> 校正字集本身屬於**資料內容**，不會被翻譯。`index.html` 與 `correction-data-builder.html` 兩頁皆已三語。
 
 ---
 
