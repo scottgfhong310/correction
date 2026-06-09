@@ -14,7 +14,11 @@
   "author": "Scott G.F. Hong",
   "repository": {
     "type": "git",
-    "url": "https://github.com/<your-account>/correction.git"
+    "url": "https://github.com/scottgfhong310/correction.git"
+  },
+  "homepage": "https://github.com/scottgfhong310/correction#readme",
+  "bugs": {
+    "url": "https://github.com/scottgfhong310/correction/issues"
   },
   "main": "app.js",
   "scripts": {
