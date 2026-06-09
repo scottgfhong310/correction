@@ -1,5 +1,7 @@
 # Correction
 
+**中文** · [English](README.en.md) · [日本語](README.ja.md)
+
 協助校正純文字檔案（如 `.txt`、`.md`、`.json`、`.srt` 等）內容的 WebApp。
 
 構想源自 speech-to-text 產生的逐字稿：把逐字稿中**因為發音而被錯判的字詞**，依照「校正字集」批次替換成正確的字詞。
