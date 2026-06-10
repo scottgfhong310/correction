@@ -1,48 +1,48 @@
 # Correction
 
-**中文** · [English](README.en.md) · [日本語](README.ja.md)
+**English** · [中文](README.zh-Hant.md) · [日本語](README.ja.md)
 
-協助校正純文字檔案（如 `.txt`、`.md`、`.json`、`.srt` 等）內容的 WebApp。
+A WebApp for correcting the content of plain-text files (e.g. `.txt`, `.md`, `.json`, `.srt`).
 
-構想源自 speech-to-text 產生的逐字稿：把逐字稿中**因為發音而被錯判的字詞**，依照「校正字集」批次替換成正確的字詞。
+The idea comes from speech-to-text transcripts: words that were **mis-recognized because of how they sound** are batch-replaced with the correct ones, according to a "correction set".
 
-- 後端：Node.js + Express（極簡，只負責靜態檔、檔案上傳與字集存檔）
-- 前端：jQuery + Materialize CSS + Lodash（皆以 CDN 載入）
+- Backend: Node.js + Express (minimal — only static files, file upload, and saving correction sets)
+- Frontend: jQuery + Materialize CSS + Lodash (all loaded from CDN)
 
-![Correction 主頁 — 上傳逐字稿、選擇校正字集、一鍵校正，右側即時顯示校正結果與每條替換的次數](docs/screenshot.png)
+![Correction home — upload a transcript, pick a correction set, correct in one click; the result and per-rule replacement counts show on the right](docs/screenshot.png)
 
 ---
 
-## 功能
+## Features
 
-兩個頁面：
+Two pages:
 
-| 頁面 | 用途 |
+| Page | Purpose |
 | --- | --- |
-| `index.html`（主頁） | 上傳待校正檔案、選擇校正字集、執行校正、複製／下載結果 |
-| `correction-data-builder.html` | 編輯／新增校正字集 |
+| `index.html` (home) | Upload a file to correct, pick a correction set, run the correction, copy / download the result |
+| `correction-data-builder.html` | Edit / add correction sets |
 
-### `index.html` — 校正流程
-1. 載入 `correction-data.json`（校正資料來源清單）。
-2. 以**拖拉**或**選擇檔案**上傳待校正檔案到 `public/upload/correction/`。
-3. 左欄顯示上傳的內容（也可直接貼上文字）。
-4. 選擇校正資料來源（correction-data）。
-5. 按 **執行校正**。
-6. 右欄顯示校正後結果，並列出每條替換的次數。
-7. 可 **複製內容**，或以原檔名加上校正時間戳（`yyyyMMddHHmmss`）**下載**。
-   - 若原檔名結尾已有時間戳，下載時會**更新**為新的時間戳，而非重複附加。
-8. 在 builder 改完字集後，可按 **重新載入** 立即套用最新內容。
+### `index.html` — correction flow
+1. Loads `correction-data.json` (the list of correction sources).
+2. **Drag** or **choose** a file to upload it to `public/upload/correction/`.
+3. The left column shows the uploaded content (you can also paste text directly).
+4. Pick a correction source (correction-data).
+5. Click **Run correction**.
+6. The right column shows the corrected result and lists the count of each replacement.
+7. You can **Copy**, or **Download** with the original name plus a correction timestamp (`yyyyMMddHHmmss`).
+   - If the original name already ends with a timestamp, downloading **replaces** it rather than appending a second one.
+8. After editing a set in the builder, click **Reload** to apply the latest content immediately.
 
-### `correction-data-builder.html` — 編輯字集
-1. 載入清單後選擇要編輯的校正資料來源。
-2. 編輯／新增／刪除條目，或**新增資料來源**（建立新檔並登記到清單）。
-3. **儲存** 會寫回伺服器；覆寫前會自動在 `.bak/` 留下帶時間戳的備份。
+### `correction-data-builder.html` — edit sets
+1. After the list loads, pick the correction source to edit.
+2. Edit / add / delete entries, or **add a new source** (creates a new file and registers it in the list).
+3. **Save** writes back to the server; before overwriting, a timestamped backup is kept under `.bak/`.
 
 ---
 
-## 校正字集格式
+## Correction set format
 
-校正字集是 `.json` 陣列，每個條目的 `source` 陣列中的**每個字串**都會被替換成 `target`：
+A correction set is a `.json` array; **every string** in each entry's `source` array is replaced with `target`:
 
 ```json
 [
@@ -51,7 +51,7 @@
 ]
 ```
 
-`correction-data.json` 則是資料來源清單：
+`correction-data.json` is the list of sources:
 
 ```json
 [
@@ -63,83 +63,83 @@
 ]
 ```
 
-> `public/correction-data/sample.json` 為示範資料，可自行替換成你的字集。
+> `public/correction-data/sample.json` is sample data — replace it with your own sets.
 
 ---
 
-## 介面語言（i18n）
+## UI language (i18n)
 
-介面支援 **繁體中文 / English / 日本語**，右上角可即時切換，選擇會記在瀏覽器（`localStorage`）。也可用網址參數強制語言，例如 `?lang=ja`、`?lang=en`、`?lang=zh-Hant`。
+The UI supports **繁體中文 / English / 日本語**, switchable instantly from the top-right; the choice is remembered in the browser (`localStorage`). You can also force a language via a URL parameter, e.g. `?lang=ja`, `?lang=en`, `?lang=zh-Hant`.
 
-字典與引擎分離，皆為純前端（無相依套件、無 build）：
+Dictionaries are separate from the engine, all pure front-end (no dependencies, no build):
 
-- `public/i18n.js` — i18n 引擎（`t` / `apply` / `set` / `register`）。
-- `public/locales/<code>.js` — 各語言字典，載入時自我註冊，例如 `I18n.register('ja', { … }, '日本語')`。
-- 語系切換器依**已註冊的語言自動產生**。
-- 日文介面會載入 **Noto Sans JP**（字檔僅在 `lang=ja` 時下載），確保日文漢字字形跨平台一致。
+- `public/i18n.js` — the i18n engine (`t` / `apply` / `set` / `register`).
+- `public/locales/<code>.js` — per-language dictionaries that self-register, e.g. `I18n.register('ja', { … }, '日本語')`.
+- The language switcher is **generated automatically** from the registered languages.
+- The Japanese UI loads **Noto Sans JP** (the font is only downloaded when `lang=ja`), for consistent Japanese kanji shapes across platforms.
 
-**新增一個語言**只要：在 `public/locales/` 加一個 `xx.js`、並在 `index.html` 引入它——引擎、切換器、頁面程式都不用改。
+**To add a language**, just drop a `xx.js` into `public/locales/` and include it in the pages — the engine, switcher, and page code don't change.
 
-> 校正字集本身屬於**資料內容**，不會被翻譯。`index.html` 與 `correction-data-builder.html` 兩頁皆已三語。
+> Correction sets are **data content** and are never translated. Both `index.html` and `correction-data-builder.html` are trilingual.
 
 ---
 
-## 安裝與啟動
+## Install & run
 
-需求：Node.js >= 16。
+Requires Node.js >= 16.
 
 ```bash
 npm install
 npm start
 ```
 
-預設在 <http://localhost:3000> 啟動（可用環境變數覆寫，例如 `PORT=8080 npm start`）。
+Starts on <http://localhost:3000> by default (override with an env var, e.g. `PORT=8080 npm start`).
 
-開啟瀏覽器到 <http://localhost:3000/> 即為主頁。
+Open <http://localhost:3000/> in a browser for the home page.
 
 ---
 
-## 專案結構
+## Project structure
 
 ```
 correction/
-├─ app.js                 # Express 進入點：靜態檔 + 上傳 + 字集存檔
+├─ app.js                 # Express entry: static files + upload + saving sets
 ├─ routes/
 │  ├─ upload.js           # POST /api/upload?folder=correction
-│  └─ correction.js       # GET/PUT /api/correction/...（字集存檔，含 .bak 備份）
-└─ public/                # 前端（靜態）
+│  └─ correction.js       # GET/PUT /api/correction/... (save sets, with .bak backups)
+└─ public/                # frontend (static)
    ├─ index.html
    ├─ correction-data-builder.html
-   ├─ correction-lib.js   # 校正引擎（字面替換 + 統計 + 檔名時間戳）
+   ├─ correction-lib.js   # correction engine (literal replace + stats + filename timestamp)
    ├─ correction-data.json
    ├─ correction-data/
    │  └─ sample.json
-   └─ upload/correction/  # 上傳暫存（內容不納入版控）
+   └─ upload/correction/  # upload scratch space (contents not version-controlled)
 ```
 
 ---
 
 ## API
 
-| 方法 | 路徑 | 說明 |
+| Method | Path | Description |
 | --- | --- | --- |
-| `POST` | `/api/upload?folder=correction` | 上傳檔案（multipart 欄位名 `myFiles`）到 `public/upload/correction/` |
-| `GET`  | `/api/correction/sources` | 列出 `correction-data/` 下的 `.json` 字集 |
-| `PUT`  | `/api/correction/sources/:file` | 寫回單一校正字集（body 為 JSON 陣列） |
-| `PUT`  | `/api/correction/list` | 寫回資料來源清單 `correction-data.json` |
+| `POST` | `/api/upload?folder=correction` | Upload files (multipart field `myFiles`) to `public/upload/correction/` |
+| `GET`  | `/api/correction/sources` | List the `.json` sets under `correction-data/` |
+| `PUT`  | `/api/correction/sources/:file` | Write back a single correction set (body is a JSON array) |
+| `PUT`  | `/api/correction/list` | Write back the source list `correction-data.json` |
 
-寫檔僅限 `public/correction-data/` 下的 `.json`，並做路徑穿越防護；覆寫前自動備份到同層 `.bak/`。
+Writes are limited to `.json` files under `public/correction-data/`, with path-traversal protection; before overwriting, a backup is made under the sibling `.bak/`.
 
 ---
 
-## 校正引擎：`CorrectionLib`
+## Correction engine: `CorrectionLib`
 
-`public/correction-lib.js` 是這個專案的核心——一個**不依賴任何套件**（只用原生 `fetch`）的純前端校正引擎。載入後會掛在全域 `window.CorrectionLib`，可單獨抽出，套用到任何需要「字集替換」的頁面。
+`public/correction-lib.js` is the heart of this project — a pure front-end correction engine with **no dependencies** (only native `fetch`). Once loaded it lives on the global `window.CorrectionLib` and can be extracted on its own and applied to any page that needs "set-based replacement".
 
 ```html
 <script src="correction-lib.js"></script>
 <script>
-  // 直接給規則套用（不需要伺服器）
+  // Apply rules directly (no server needed)
   var rules = [
     { source: ["佈署", "布署"], target: "部署" },
     { source: ["想象"],         target: "想像" }
@@ -153,40 +153,40 @@ correction/
 
 ### API
 
-| 方法 | 簽章 | 說明 |
+| Method | Signature | Description |
 | --- | --- | --- |
-| `loadList(url?)` | `(url='./correction-data.json') → Promise<Array>` | 載入資料來源清單。自動加上 cache-busting 確保讀到最新內容。 |
-| `loadSource(file, base?)` | `(file, base='./correction-data/') → Promise<Array>` | 載入單一校正字集（`base + file`）。同樣 cache-busting。 |
-| `apply(text, rules)` | `→ { text, stats, total }` | 套用校正。詳見下方。 |
-| `timestamp(date?)` | `(date=new Date()) → "yyyyMMddHHmmss"` | 產生本地時間戳。 |
-| `stampFilename(name, ts?)` | `(name, ts=timestamp()) → string` | 為下載檔名加時間戳：主檔名結尾**已有**時間戳則**替換**，否則在副檔名前**附加**。 |
+| `loadList(url?)` | `(url='./correction-data.json') → Promise<Array>` | Load the source list. Adds cache-busting so you always read the latest. |
+| `loadSource(file, base?)` | `(file, base='./correction-data/') → Promise<Array>` | Load a single set (`base + file`). Cache-busted too. |
+| `apply(text, rules)` | `→ { text, stats, total }` | Apply corrections. See below. |
+| `timestamp(date?)` | `(date=new Date()) → "yyyyMMddHHmmss"` | Produce a local timestamp. |
+| `stampFilename(name, ts?)` | `(name, ts=timestamp()) → string` | Add a timestamp to a download name: if the base name already ends with one, **replace** it; otherwise **append** before the extension. |
 
 ### `apply(text, rules)`
 
-以**字面字串**（literal，非正規表示式）**逐條依序**全域替換：每條規則 `source` 陣列中的每個字串都會被換成該規則的 `target`。
+Global replacement by **literal string** (not regex), **rule by rule in order**: every string in a rule's `source` array is replaced with that rule's `target`.
 
-回傳物件：
+Returns:
 
-| 欄位 | 型別 | 說明 |
+| Field | Type | Description |
 | --- | --- | --- |
-| `text` | `string` | 校正後的完整文字 |
-| `stats` | `Array<{ source, target, count }>` | 每條**有命中**的替換與次數 |
-| `total` | `number` | 總替換次數 |
+| `text` | `string` | The fully corrected text |
+| `stats` | `Array<{ source, target, count }>` | Each replacement that **matched**, with its count |
+| `total` | `number` | Total number of replacements |
 
-### 從伺服器載入字集後套用
+### Load a set from the server, then apply
 
 ```js
-// 1) 載入清單 → 取第一個字集 → 載入它 → 套用
+// 1) load the list → take the first set → load it → apply
 const list  = await CorrectionLib.loadList();              // [{ alias, file, description }, ...]
 const rules = await CorrectionLib.loadSource(list[0].file);
-const out   = CorrectionLib.apply(原始逐字稿, rules);
+const out   = CorrectionLib.apply(transcript, rules);
 
-// 2) 以原檔名 + 校正時間戳命名下載
-const name = CorrectionLib.stampFilename("逐字稿.txt");     // → "逐字稿-20260610153000.txt"
-// 逐字稿-20250101000000.txt → 逐字稿-20260610153000.txt（時間戳被替換，而非重複附加）
+// 2) name the download with the original name + correction timestamp
+const name = CorrectionLib.stampFilename("transcript.txt");  // → "transcript-20260610153000.txt"
+// transcript-20250101000000.txt → transcript-20260610153000.txt (timestamp replaced, not appended)
 ```
 
-> 引擎本身與 UI 無關，`index.html` 與 `correction-data-builder.html` 都只是它的前端外殼。
+> The engine is UI-agnostic; `index.html` and `correction-data-builder.html` are just front-ends over it.
 
 ---
 

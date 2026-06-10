@@ -1,6 +1,6 @@
 # Correction
 
-[中文](README.md) · [English](README.en.md) · **日本語**
+[English](README.md) · [中文](README.zh-Hant.md) · **日本語**
 
 プレーンテキストファイル（`.txt`、`.md`、`.json`、`.srt` など）の内容を校正する WebApp です。
 
