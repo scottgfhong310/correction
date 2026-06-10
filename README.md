@@ -4,6 +4,8 @@
 
 A WebApp for correcting the content of plain-text files (e.g. `.txt`, `.md`, `.json`, `.srt`).
 
+**▶ Live demo:** <https://scottgfhong310.github.io/correction/> — runs entirely in your browser. The correction itself needs no server; uploading to the server folder and saving sets in the builder only work when you run it locally.
+
 The idea comes from speech-to-text transcripts: words that were **mis-recognized because of how they sound** are batch-replaced with the correct ones, according to a "correction set".
 
 - Backend: Node.js + Express (minimal — only static files, file upload, and saving correction sets)

@@ -4,6 +4,8 @@
 
 協助校正純文字檔案（如 `.txt`、`.md`、`.json`、`.srt` 等）內容的 WebApp。
 
+**▶ 線上 Demo：** <https://scottgfhong310.github.io/correction/> — 完全在瀏覽器執行。校正本身不需要伺服器；「上傳到伺服器資料夾」與 builder 的「儲存」需在本機執行才有作用。
+
 構想源自 speech-to-text 產生的逐字稿：把逐字稿中**因為發音而被錯判的字詞**，依照「校正字集」批次替換成正確的字詞。
 
 - 後端：Node.js + Express（極簡，只負責靜態檔、檔案上傳與字集存檔）
