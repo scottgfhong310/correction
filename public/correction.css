@@ -1,0 +1,58 @@
+/* correction — 頁面樣式（從 index.html 內嵌 <style> 拉出）
+ * 共用工具列樣式見 side-tool.css；此處為本頁專屬樣式。
+ */
+
+body { padding-bottom: 40px; }
+header { position: sticky; top: 0; z-index: 1000; }
+.container.wide { width: 94%; max-width: 1400px; }
+
+.drop-zone {
+  border: 2px dashed #b0bec5;
+  border-radius: 8px;
+  padding: 18px;
+  margin: 4px 0 12px;
+  text-align: center;
+  color: #607d8b;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.drop-zone .material-icons { vertical-align: middle; margin-right: 6px; }
+.drop-zone.dragover { background: #e0f2f1; border-color: #26a69a; color: #00897b; }
+
+textarea.doc {
+  width: 100%;
+  min-height: 360px;
+  resize: vertical;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: .95rem;
+  line-height: 1.6;
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background: #fafafa;
+}
+.card .card-title { font-size: 1.2rem; }
+.meta { font-size: .85rem; color: #757575; }
+.stats { max-height: 200px; overflow: auto; margin-top: 10px; }
+.stats table { font-size: .85rem; }
+.toolbar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.toolbar .input-field { margin: 0; flex: 1 1 260px; min-width: 220px; }
+#langSwitch .lang-link { padding: 0 10px; opacity: .65; }
+#langSwitch .lang-link.active { opacity: 1; font-weight: 700; text-decoration: underline; }
+
+/* 日文介面：以 Noto Sans JP 提供一致的日文字形（僅 lang=ja 生效） */
+html[lang="ja"] body,
+html[lang="ja"] input,
+html[lang="ja"] select,
+html[lang="ja"] button,
+html[lang="ja"] .btn,
+html[lang="ja"] .btn-flat,
+html[lang="ja"] .select-dropdown,
+html[lang="ja"] .toast {
+  font-family: "Noto Sans JP", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Roboto, sans-serif;
+}
+html[lang="ja"] textarea.doc,
+html[lang="ja"] table.entries textarea {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Noto Sans JP", monospace;
+}
