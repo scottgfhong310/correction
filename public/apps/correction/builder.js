@@ -112,7 +112,7 @@ $(function () {
 
   function rowHtml() {
     return '<tr>' +
-      '<td class="col-src"><textarea class="src" data-i18n-placeholder="b.ph.src" placeholder="一行一個原字詞"></textarea></td>' +
+      '<td class="col-src"><textarea class="src materialize-textarea" data-i18n-placeholder="b.ph.src" placeholder="一行一個原字詞"></textarea></td>' +
       '<td class="col-tgt"><input class="tgt" type="text" data-i18n-placeholder="b.ph.tgt" placeholder="校正後字詞"></td>' +
       '<td class="col-act"><a href="#!" class="del-row red-text" data-i18n-title="b.del.title" title="刪除"><i class="material-icons">delete</i></a></td>' +
       '</tr>';
@@ -132,6 +132,7 @@ $(function () {
       $row.find('.tgt').val(r.target == null ? '' : r.target);
       $body.append($row);
     });
+    $body.find('.src').each(function () { M.textareaAutoResize(this); });
     if (!rules.length) addRow();
   }
 
@@ -146,6 +147,8 @@ $(function () {
     e.preventDefault();
     $(this).closest('tr').remove();
   });
+  // materialize-textarea 隨輸入自動長高
+  $('#entryBody').on('input', '.src', function () { M.textareaAutoResize(this); });
 
   // ---- 從表格組出資料陣列 ----
   function collectRules() {

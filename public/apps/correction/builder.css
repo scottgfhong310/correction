@@ -44,17 +44,12 @@ table.entries th, table.entries td { padding: 8px; vertical-align: top; color: v
 table.entries .col-src { width: 45%; }
 table.entries .col-tgt { width: 35%; }
 table.entries .col-act { width: 64px; text-align: center; }
-table.entries textarea {
-  min-height: 60px; margin: 0; padding: 8px; box-sizing: border-box;
-  border: 1px solid var(--border); border-radius: 4px; width: 100%;
+/* 表單元素以 Materialize 原生設計為主（底線式，不手刻外框/底色，§5.7）；僅留版面微調 */
+table.entries textarea.materialize-textarea {
+  min-height: 60px; margin: 0;
   font-family: ui-monospace, Menlo, Monaco, Consolas, monospace; font-size: .9rem;
-  background: var(--surface-2); color: var(--text);
 }
-table.entries input.tgt {
-  margin: 0; height: 2.6rem; border: 1px solid var(--border); border-radius: 4px;
-  padding: 0 8px; box-sizing: border-box; width: 100%;
-  background: var(--surface-2); color: var(--text);
-}
+table.entries input.tgt { margin: 0; }
 .hint { font-size: .82rem; color: var(--muted); }
 .save-bar {
   position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface);
@@ -79,6 +74,10 @@ table.entries input.tgt {
 [data-theme="dark"] .modal input[type=text], [data-theme="dark"] .modal input:not([type]) { color: var(--text); border-bottom: 1px solid var(--border); }
 [data-theme="dark"] .modal label { color: var(--muted); }
 [data-theme="dark"] .modal .modal-close { color: var(--text); }
+[data-theme="dark"] table.entries textarea,
+[data-theme="dark"] table.entries input.tgt { color: var(--text); border-bottom-color: var(--border); }
+[data-theme="dark"] table.entries textarea:focus,
+[data-theme="dark"] table.entries input.tgt:focus { border-bottom-color: var(--accent); box-shadow: 0 1px 0 0 var(--accent); }
 
 /* 日文介面：以 Noto Sans JP 提供一致的日文字形（僅 lang=ja 生效） */
 html[lang="ja"] body,
