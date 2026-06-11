@@ -1,23 +1,51 @@
 /* correction — 頁面樣式（從 index.html 內嵌 <style> 拉出）
  * 共用工具列樣式見 side-tool.css；此處為本頁專屬樣式。
+ * 主題：CSS 變數驅動 light / dark（<html data-theme>），預設 dark；accent 沿用 Materialize teal 品牌色。
  */
 
-body { padding-bottom: 40px; }
+/* ===== 主題 token ===== */
+:root, [data-theme="dark"] {
+  --bg: #0f1115;
+  --surface: #161a22;
+  --surface-2: #1b2030;
+  --text: #e8eaf0;
+  --muted: #9aa3b2;
+  --border: rgba(255, 255, 255, 0.12);
+  --accent: #26a69a;                 /* Materialize teal（correction 品牌色） */
+  --accent-soft: rgba(38, 166, 154, 0.16);
+}
+[data-theme="light"] {
+  --bg: #f6f8fa;
+  --surface: #ffffff;
+  --surface-2: #fafafa;
+  --text: #1f2328;
+  --muted: #757575;
+  --border: #e0e0e0;
+  --accent: #26a69a;
+  --accent-soft: #e0f2f1;
+}
+
+body {
+  padding-bottom: 40px;
+  background: var(--bg);
+  color: var(--text);
+  transition: background .2s ease, color .2s ease;
+}
 header { position: sticky; top: 0; z-index: 1000; }
 .container.wide { width: 94%; max-width: 1400px; }
 
 .drop-zone {
-  border: 2px dashed #b0bec5;
+  border: 2px dashed var(--border);
   border-radius: 8px;
   padding: 18px;
   margin: 4px 0 12px;
   text-align: center;
-  color: #607d8b;
+  color: var(--muted);
   cursor: pointer;
   transition: background .15s, border-color .15s, color .15s;
 }
 .drop-zone .material-icons { vertical-align: middle; margin-right: 6px; }
-.drop-zone.dragover { background: #e0f2f1; border-color: #26a69a; color: #00897b; }
+.drop-zone.dragover { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
 
 textarea.doc {
   width: 100%;
@@ -27,19 +55,36 @@ textarea.doc {
   font-size: .95rem;
   line-height: 1.6;
   padding: 10px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border);
   border-radius: 4px;
   box-sizing: border-box;
-  background: #fafafa;
+  background: var(--surface-2);
+  color: var(--text);
 }
-.card .card-title { font-size: 1.2rem; }
-.meta { font-size: .85rem; color: #757575; }
+textarea.doc::placeholder { color: var(--muted); }
+
+.card { background: var(--surface); color: var(--text); }
+.card .card-content { color: var(--text); }
+.card .card-title { font-size: 1.2rem; color: var(--text); }
+.card .card-action { border-top: 1px solid var(--border); }
+.meta { font-size: .85rem; color: var(--muted); }
 .stats { max-height: 200px; overflow: auto; margin-top: 10px; }
-.stats table { font-size: .85rem; }
+.stats table { font-size: .85rem; color: var(--text); }
 .toolbar { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
 .toolbar .input-field { margin: 0; flex: 1 1 260px; min-width: 220px; }
 #langSwitch .lang-link { padding: 0 10px; opacity: .65; }
 #langSwitch .lang-link.active { opacity: 1; font-weight: 700; text-decoration: underline; }
+
+/* ===== dark 模式下覆寫 Materialize 預設亮色元件 ===== */
+[data-theme="dark"] .input-field > label { color: var(--muted); }
+[data-theme="dark"] input.select-dropdown { color: var(--text); border-bottom: 1px solid var(--border); }
+[data-theme="dark"] .select-wrapper .caret { fill: var(--muted); }
+[data-theme="dark"] .dropdown-content { background: var(--surface); box-shadow: 0 4px 12px rgba(0, 0, 0, .5); }
+[data-theme="dark"] .dropdown-content li > a, [data-theme="dark"] .dropdown-content li > span { color: var(--text); }
+[data-theme="dark"] .dropdown-content li:hover, [data-theme="dark"] .dropdown-content li.selected { background: rgba(255, 255, 255, .08); }
+[data-theme="dark"] .btn-flat { color: var(--text); }
+[data-theme="dark"] .btn-flat.disabled { color: var(--muted) !important; }
+[data-theme="dark"] table.striped > tbody > tr:nth-child(odd) { background: rgba(255, 255, 255, .04); }
 
 /* 日文介面：以 Noto Sans JP 提供一致的日文字形（僅 lang=ja 生效） */
 html[lang="ja"] body,

@@ -10,7 +10,7 @@
 let main = {
   event: {
     binding: function () {
-      $(".side-tool").click(function (e) {
+      $(".side-tool").not('#setting-mode').click(function (e) {
         e.preventDefault();
         main.event.setIconDone($(this));
       });
@@ -45,6 +45,19 @@ let main = {
 
 $(function () {
   var BASE = './correction-data/';
+
+  // ---- 主題（light / dark，預設 dark；與 builder 共用 localStorage('correction-theme')）----
+  var THEME_KEY = 'correction-theme';
+  function applyTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    $('#setting-mode i').text(t === 'dark' ? 'dark_mode' : 'light_mode');
+    try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
+  }
+  applyTheme((function () { try { return localStorage.getItem(THEME_KEY) === 'light' ? 'light' : 'dark'; } catch (e) { return 'dark'; } })());
+  $('#setting-mode').on('click', function () {
+    applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
   var state = {
     filename: 'corrected.txt',   // 用於下載命名
     rules: null,                 // 已載入的校正字集

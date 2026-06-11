@@ -52,9 +52,10 @@
   line-height: 1;
 }
 
-/* 由上而下排列：correction 目前只有這兩顆工具 */
-#setting-file_download { top: var(--tool-top); }
-#setting-copy          { top: calc(var(--tool-top) + 1 * var(--tool-step)); }
+/* 由上而下排列 */
+#setting-mode          { top: var(--tool-top); }
+#setting-file_download { top: calc(var(--tool-top) + 1 * var(--tool-step)); }
+#setting-copy          { top: calc(var(--tool-top) + 2 * var(--tool-step)); }
 
 /* toggle 啟用狀態以 accent 色標示（保留以便未來擴充） */
 .side-tool.active {

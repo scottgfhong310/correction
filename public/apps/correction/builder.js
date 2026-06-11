@@ -9,6 +9,19 @@
 
 $(function () {
   var BASE = './correction-data/';
+
+  // ---- 主題（light / dark，預設 dark；與 index 共用 localStorage('correction-theme')）----
+  var THEME_KEY = 'correction-theme';
+  function applyTheme(t) {
+    document.documentElement.setAttribute('data-theme', t);
+    $('#setting-mode i').text(t === 'dark' ? 'dark_mode' : 'light_mode');
+    try { localStorage.setItem(THEME_KEY, t); } catch (e) {}
+  }
+  applyTheme((function () { try { return localStorage.getItem(THEME_KEY) === 'light' ? 'light' : 'dark'; } catch (e) { return 'dark'; } })());
+  $('#setting-mode').on('click', function () {
+    applyTheme(document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
   var state = { sources: [], current: null, statusThunk: null };
 
   var $select = $('#sourceSelect');

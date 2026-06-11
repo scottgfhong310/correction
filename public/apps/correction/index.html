@@ -9,6 +9,9 @@
   <meta http-equiv="Expires" content="0" />
   <title>Correction — 純文字校正</title>
 
+  <!-- 防主題閃爍：render 前先依 localStorage 設好 data-theme（預設 dark） -->
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('correction-theme')||'dark'}catch(e){}</script>
+
   <!-- Materialize CSS -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
@@ -114,6 +117,10 @@
   </div>
 
   <!-- 右側工具列  -->
+  <div id="setting-mode" class="side-tool" title="切換 light / dark">
+    <i class="material-icons" style="font-size: 20px;">dark_mode</i>
+  </div>
+
   <div id="setting-file_download" class="side-tool">
     <i class="material-icons" style="font-size: 20px;">file_download</i>
   </div>

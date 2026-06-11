@@ -9,6 +9,9 @@
   <meta http-equiv="Expires" content="0" />
   <title>Correction — 編輯校正字集</title>
 
+  <!-- 防主題閃爍：render 前先依 localStorage 設好 data-theme（預設 dark） -->
+  <script>try{document.documentElement.dataset.theme=localStorage.getItem('correction-theme')||'dark'}catch(e){}</script>
+
   <!-- Materialize CSS -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
@@ -43,6 +46,7 @@
         </a>
         <ul id="langSwitch" class="right"><!-- 依 I18n.langs 自動產生 --></ul>
         <ul class="right hide-on-med-and-down">
+          <li><a id="setting-mode" href="#!" title="切換 light / dark"><i class="material-icons">dark_mode</i></a></li>
           <li><a href="./index.html"><i class="material-icons left">spellcheck</i><span data-i18n="b.nav.back">回校正頁</span></a></li>
           <li style="width:16px;">&nbsp;</li>
         </ul>
