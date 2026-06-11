@@ -114,7 +114,7 @@ $(function () {
     return '<tr>' +
       '<td class="col-src"><textarea class="src materialize-textarea" data-i18n-placeholder="b.ph.src" placeholder="一行一個原字詞"></textarea></td>' +
       '<td class="col-tgt"><input class="tgt" type="text" data-i18n-placeholder="b.ph.tgt" placeholder="校正後字詞"></td>' +
-      '<td class="col-act"><a href="#!" class="del-row red-text" data-i18n-title="b.del.title" title="刪除"><i class="material-icons">delete</i></a></td>' +
+      '<td class="col-act"><a href="#!" class="del-row red-text" data-i18n-title="b.del.title" title="刪除"><i class="material-icons">clear</i></a></td>' +
       '</tr>';
   }
   function newRow() {

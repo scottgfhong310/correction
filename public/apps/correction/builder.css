@@ -44,6 +44,8 @@ table.entries th, table.entries td { padding: 8px; vertical-align: top; color: v
 table.entries .col-src { width: 45%; }
 table.entries .col-tgt { width: 35%; }
 table.entries .col-act { width: 64px; text-align: center; }
+/* 刪除鍵垂直對齊到相對的 target 輸入框（3rem 高，置中）而非停在列頂 */
+table.entries .col-act .del-row { display: inline-flex; align-items: center; justify-content: center; min-height: 3rem; }
 /* 表單元素以 Materialize 原生設計為主（底線式，不手刻外框/底色，§5.7）；僅留版面微調 */
 table.entries textarea.materialize-textarea {
   min-height: 60px; margin: 0;
