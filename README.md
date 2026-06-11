@@ -4,8 +4,6 @@
 
 A WebApp for correcting the content of plain-text files (e.g. `.txt`, `.md`, `.json`, `.srt`).
 
-**▶ Live demo:** <https://scottgfhong310.github.io/correction/> — runs entirely in your browser. The correction itself needs no server; uploading to the server folder and saving sets in the builder only work when you run it locally.
-
 The idea comes from speech-to-text transcripts: words that were **mis-recognized because of how they sound** are batch-replaced with the correct ones, according to a "correction set".
 
 - Backend: Node.js + Express (minimal — only static files, file upload, and saving correction sets)
@@ -65,7 +63,7 @@ A correction set is a `.json` array; **every string** in each entry's `source` a
 ]
 ```
 
-> `public/correction-data/sample.json` is sample data — replace it with your own sets.
+> `public/apps/correction/correction-data/sample.json` is sample data — replace it with your own sets.
 
 ---
 
@@ -75,12 +73,12 @@ The UI supports **繁體中文 / English / 日本語**, switchable instantly fro
 
 Dictionaries are separate from the engine, all pure front-end (no dependencies, no build):
 
-- `public/i18n.js` — the i18n engine (`t` / `apply` / `set` / `register`).
-- `public/locales/<code>.js` — per-language dictionaries that self-register, e.g. `I18n.register('ja', { … }, '日本語')`.
+- `public/apps/correction/i18n.js` — the i18n engine (`t` / `apply` / `set` / `register`).
+- `public/apps/correction/locales/<code>.js` — per-language dictionaries that self-register, e.g. `I18n.register('ja', { … }, '日本語')`.
 - The language switcher is **generated automatically** from the registered languages.
 - The Japanese UI loads **Noto Sans JP** (the font is only downloaded when `lang=ja`), for consistent Japanese kanji shapes across platforms.
 
-**To add a language**, just drop a `xx.js` into `public/locales/` and include it in the pages — the engine, switcher, and page code don't change.
+**To add a language**, just drop a `xx.js` into `public/apps/correction/locales/` and include it in the pages — the engine, switcher, and page code don't change.
 
 > Correction sets are **data content** and are never translated. Both `index.html` and `correction-data-builder.html` are trilingual.
 
@@ -105,18 +103,19 @@ Open <http://localhost:3000/> in a browser for the home page.
 
 ```
 correction/
-├─ app.js                 # Express entry: static files + upload + saving sets
+├─ app.js                 # Express entry: static + upload + saving sets; / → /apps/correction/
 ├─ routes/
 │  ├─ upload.js           # POST /api/upload?folder=correction
 │  └─ correction.js       # GET/PUT /api/correction/... (save sets, with .bak backups)
-└─ public/                # frontend (static)
-   ├─ index.html
-   ├─ correction-data-builder.html
-   ├─ correction-lib.js   # correction engine (literal replace + stats + filename timestamp)
-   ├─ correction-data.json
-   ├─ correction-data/
-   │  └─ sample.json
-   └─ upload/correction/  # upload scratch space (contents not version-controlled)
+└─ public/
+   ├─ apps/correction/    # frontend + data (served at /apps/correction/)
+   │  ├─ index.html · correction.css · correction.js
+   │  ├─ correction-data-builder.html · builder.css · builder.js
+   │  ├─ correction-lib.js                  # correction engine
+   │  ├─ side-tool.css · i18n.js · locales/{zh-Hant,en,ja}.js
+   │  ├─ correction-data.json               # source list
+   │  └─ correction-data/sample.json        # a correction set
+   └─ upload/correction/  # upload scratch space (not version-controlled)
 ```
 
 ---
@@ -130,13 +129,13 @@ correction/
 | `PUT`  | `/api/correction/sources/:file` | Write back a single correction set (body is a JSON array) |
 | `PUT`  | `/api/correction/list` | Write back the source list `correction-data.json` |
 
-Writes are limited to `.json` files under `public/correction-data/`, with path-traversal protection; before overwriting, a backup is made under the sibling `.bak/`.
+Writes are limited to `.json` files under `public/apps/correction/correction-data/`, with path-traversal protection; before overwriting, a backup is made under the sibling `.bak/`.
 
 ---
 
 ## Correction engine: `CorrectionLib`
 
-`public/correction-lib.js` is the heart of this project — a pure front-end correction engine with **no dependencies** (only native `fetch`). Once loaded it lives on the global `window.CorrectionLib` and can be extracted on its own and applied to any page that needs "set-based replacement".
+`public/apps/correction/correction-lib.js` is the heart of this project — a pure front-end correction engine with **no dependencies** (only native `fetch`). Once loaded it lives on the global `window.CorrectionLib` and can be extracted on its own and applied to any page that needs "set-based replacement".
 
 ```html
 <script src="correction-lib.js"></script>

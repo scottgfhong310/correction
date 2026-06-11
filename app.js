@@ -28,6 +28,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/upload', uploadRouter);
 app.use('/api/correction', correctionRouter);
 
+// 根路徑導向應用頁
+app.get('/', (req, res) => res.redirect('/apps/correction/'));
+
 // 404（API 回 JSON，其餘回簡短訊息）
 app.use((req, res) => {
   if (req.path.startsWith('/api/')) {
@@ -37,7 +40,7 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Correction app listening on http://localhost:${PORT}`);
+  console.log(`Correction →  http://localhost:${PORT}/apps/correction/`);
 });
 
 module.exports = app;

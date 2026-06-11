@@ -45,8 +45,6 @@ let main = {
 
 $(function () {
   var BASE = './correction-data/';
-  // 靜態 demo（GitHub Pages，*.github.io）沒有後端 → 略過「上傳到伺服器」這一步，校正本身仍可用
-  var IS_STATIC_DEMO = /\.github\.io$/i.test(location.hostname);
   var state = {
     filename: 'corrected.txt',   // 用於下載命名
     rules: null,                 // 已載入的校正字集
@@ -187,8 +185,7 @@ $(function () {
     };
     reader.readAsText(file, 'UTF-8');
 
-    // 2) 上傳到 /upload/correction 資料夾（靜態 demo 無後端，略過；校正不受影響）
-    if (IS_STATIC_DEMO) return;
+    // 2) 上傳到 /upload/correction 資料夾
     var fd = new FormData();
     fd.append('myFiles', file);
     $.ajax({

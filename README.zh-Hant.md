@@ -4,8 +4,6 @@
 
 協助校正純文字檔案（如 `.txt`、`.md`、`.json`、`.srt` 等）內容的 WebApp。
 
-**▶ 線上 Demo：** <https://scottgfhong310.github.io/correction/> — 完全在瀏覽器執行。校正本身不需要伺服器；「上傳到伺服器資料夾」與 builder 的「儲存」需在本機執行才有作用。
-
 構想源自 speech-to-text 產生的逐字稿：把逐字稿中**因為發音而被錯判的字詞**，依照「校正字集」批次替換成正確的字詞。
 
 - 後端：Node.js + Express（極簡，只負責靜態檔、檔案上傳與字集存檔）
@@ -65,7 +63,7 @@
 ]
 ```
 
-> `public/correction-data/sample.json` 為示範資料，可自行替換成你的字集。
+> `public/apps/correction/correction-data/sample.json` 為示範資料，可自行替換成你的字集。
 
 ---
 
@@ -75,12 +73,12 @@
 
 字典與引擎分離，皆為純前端（無相依套件、無 build）：
 
-- `public/i18n.js` — i18n 引擎（`t` / `apply` / `set` / `register`）。
-- `public/locales/<code>.js` — 各語言字典，載入時自我註冊，例如 `I18n.register('ja', { … }, '日本語')`。
+- `public/apps/correction/i18n.js` — i18n 引擎（`t` / `apply` / `set` / `register`）。
+- `public/apps/correction/locales/<code>.js` — 各語言字典，載入時自我註冊，例如 `I18n.register('ja', { … }, '日本語')`。
 - 語系切換器依**已註冊的語言自動產生**。
 - 日文介面會載入 **Noto Sans JP**（字檔僅在 `lang=ja` 時下載），確保日文漢字字形跨平台一致。
 
-**新增一個語言**只要：在 `public/locales/` 加一個 `xx.js`、並在 `index.html` 引入它——引擎、切換器、頁面程式都不用改。
+**新增一個語言**只要：在 `public/apps/correction/locales/` 加一個 `xx.js`、並在 `index.html` 引入它——引擎、切換器、頁面程式都不用改。
 
 > 校正字集本身屬於**資料內容**，不會被翻譯。`index.html` 與 `correction-data-builder.html` 兩頁皆已三語。
 
@@ -105,17 +103,18 @@ npm start
 
 ```
 correction/
-├─ app.js                 # Express 進入點：靜態檔 + 上傳 + 字集存檔
+├─ app.js                 # Express 進入點：靜態檔 + 上傳 + 字集存檔；/ → /apps/correction/
 ├─ routes/
 │  ├─ upload.js           # POST /api/upload?folder=correction
 │  └─ correction.js       # GET/PUT /api/correction/...（字集存檔，含 .bak 備份）
-└─ public/                # 前端（靜態）
-   ├─ index.html
-   ├─ correction-data-builder.html
-   ├─ correction-lib.js   # 校正引擎（字面替換 + 統計 + 檔名時間戳）
-   ├─ correction-data.json
-   ├─ correction-data/
-   │  └─ sample.json
+└─ public/
+   ├─ apps/correction/    # 前端 + 資料（服務於 /apps/correction/）
+   │  ├─ index.html · correction.css · correction.js
+   │  ├─ correction-data-builder.html · builder.css · builder.js
+   │  ├─ correction-lib.js                  # 校正引擎
+   │  ├─ side-tool.css · i18n.js · locales/{zh-Hant,en,ja}.js
+   │  ├─ correction-data.json               # 字集清單
+   │  └─ correction-data/sample.json        # 一個校正字集
    └─ upload/correction/  # 上傳暫存（內容不納入版控）
 ```
 
@@ -130,13 +129,13 @@ correction/
 | `PUT`  | `/api/correction/sources/:file` | 寫回單一校正字集（body 為 JSON 陣列） |
 | `PUT`  | `/api/correction/list` | 寫回資料來源清單 `correction-data.json` |
 
-寫檔僅限 `public/correction-data/` 下的 `.json`，並做路徑穿越防護；覆寫前自動備份到同層 `.bak/`。
+寫檔僅限 `public/apps/correction/correction-data/` 下的 `.json`，並做路徑穿越防護；覆寫前自動備份到同層 `.bak/`。
 
 ---
 
 ## 校正引擎：`CorrectionLib`
 
-`public/correction-lib.js` 是這個專案的核心——一個**不依賴任何套件**（只用原生 `fetch`）的純前端校正引擎。載入後會掛在全域 `window.CorrectionLib`，可單獨抽出，套用到任何需要「字集替換」的頁面。
+`public/apps/correction/correction-lib.js` 是這個專案的核心——一個**不依賴任何套件**（只用原生 `fetch`）的純前端校正引擎。載入後會掛在全域 `window.CorrectionLib`，可單獨抽出，套用到任何需要「字集替換」的頁面。
 
 ```html
 <script src="correction-lib.js"></script>

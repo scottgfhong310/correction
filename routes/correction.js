@@ -32,7 +32,7 @@ const fs = require('fs').promises;
 const router = express.Router();
 
 // public 根目錄與校正字集目錄
-const APP_DIR = path.join(__dirname, '..', 'public');
+const APP_DIR = path.join(__dirname, '..', 'public', 'apps', 'correction');
 const DATA_DIR = path.join(APP_DIR, 'correction-data');
 const LIST_FILE = path.join(APP_DIR, 'correction-data.json');
 
@@ -122,7 +122,7 @@ router.get('/sources', async (req, res) => {
 
 // PUT /api/correction/list — 寫回資料來源清單 correction-data.json
 router.put('/list', express.json({ limit: '5mb' }), (req, res) => {
-  return writeJsonFile(LIST_FILE, '/api/correction/list', '/correction-data', req.body, res);
+  return writeJsonFile(LIST_FILE, '/api/correction/list', '/apps/correction/correction-data', req.body, res);
 });
 
 // PUT /api/correction/sources/:file — 寫回單一校正字集
@@ -136,7 +136,7 @@ router.put('/sources/:file', express.json({ limit: '5mb' }), async (req, res) =>
     return res.status(403).json({ ok: false, error: 'Forbidden: resolved path outside data dir' });
   }
   await fs.mkdir(DATA_DIR, { recursive: true });
-  return writeJsonFile(abs, '/api/correction/sources/' + safe, '/correction-data', req.body, res);
+  return writeJsonFile(abs, '/api/correction/sources/' + safe, '/apps/correction/correction-data', req.body, res);
 });
 
 module.exports = router;
