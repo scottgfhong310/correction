@@ -64,7 +64,7 @@ const upload = multer({ storage }).array('myFiles', 20);
 router.post('/', function (req, res) {
   upload(req, res, function (err) {
     if (err) {
-      return res.status(500).json({ success: false, error: 'Upload error: ' + err.message });
+      return res.status(500).json({ ok: false, error: 'Upload error: ' + err.message });
     }
     const uploadDate = new Date().toISOString();
     const files = (req.files || []).map(f => {
@@ -78,7 +78,7 @@ router.post('/', function (req, res) {
         date: uploadDate
       };
     });
-    res.json({ success: true, uploadDate, files });
+    res.json({ ok: true, uploadDate, files });
   });
 });
 

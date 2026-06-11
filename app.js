@@ -34,7 +34,7 @@ app.get('/', (req, res) => res.redirect('/apps/correction/'));
 // 404（API 回 JSON，其餘回簡短訊息）
 app.use((req, res) => {
   if (req.path.startsWith('/api/')) {
-    return res.status(404).json({ success: false, error: 'Not found' });
+    return res.status(404).json({ ok: false, error: 'Not found' });
   }
   res.status(404).type('text/plain').send('Not found');
 });

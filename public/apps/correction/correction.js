@@ -192,7 +192,7 @@ $(function () {
       url: '/api/upload?folder=correction',
       type: 'POST', data: fd, processData: false, contentType: false
     }).done(function (resp) {
-      if (resp && resp.success) {
+      if (resp && resp.ok) {
         M.toast({ html: I18n.t('toast.uploaded', { file: file.name }), classes: 'green' });
       } else {
         M.toast({ html: I18n.t('toast.uploadFailed', { msg: (resp && resp.error) || I18n.t('error.unknown') }), classes: 'orange' });
