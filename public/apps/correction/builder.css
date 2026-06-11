@@ -68,6 +68,11 @@ table.entries input.tgt {
 /* ===== dark 模式覆寫 ===== */
 [data-theme="dark"] .input-field > label { color: var(--muted); }
 [data-theme="dark"] .btn-flat { color: var(--text); }
+[data-theme="dark"] input.select-dropdown { color: var(--text); border-bottom: 1px solid var(--border); }
+[data-theme="dark"] .select-wrapper .caret { fill: var(--muted); }
+[data-theme="dark"] .dropdown-content { background: var(--surface); box-shadow: 0 4px 12px rgba(0, 0, 0, .5); }
+[data-theme="dark"] .dropdown-content li > a, [data-theme="dark"] .dropdown-content li > span { color: var(--text); }
+[data-theme="dark"] .dropdown-content li:hover, [data-theme="dark"] .dropdown-content li.selected { background: rgba(255, 255, 255, .08); }
 [data-theme="dark"] .modal { background: var(--surface); color: var(--text); }
 [data-theme="dark"] .modal .modal-footer { background: var(--surface); border-top: 1px solid var(--border); }
 [data-theme="dark"] .modal input[type=text], [data-theme="dark"] .modal input:not([type]) { color: var(--text); border-bottom: 1px solid var(--border); }
