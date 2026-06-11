@@ -68,6 +68,7 @@ table.entries input.tgt {
 /* ===== dark 模式覆寫 ===== */
 [data-theme="dark"] .input-field > label { color: var(--muted); }
 [data-theme="dark"] .btn-flat { color: var(--text); }
+[data-theme="dark"] table.entries > tbody > tr:nth-child(odd) { background: rgba(255, 255, 255, .04); }
 [data-theme="dark"] input.select-dropdown { color: var(--text); border-bottom: 1px solid var(--border); }
 [data-theme="dark"] .select-wrapper .caret { fill: var(--muted); }
 [data-theme="dark"] .dropdown-content { background: var(--surface); box-shadow: 0 4px 12px rgba(0, 0, 0, .5); }

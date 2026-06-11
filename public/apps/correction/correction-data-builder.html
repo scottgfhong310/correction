@@ -35,6 +35,7 @@
   <script src="./locales/ja.js"></script>
 
   <link rel="stylesheet" href="./builder.css">
+  <link rel="stylesheet" href="./side-tool.css">
 </head>
 
 <body data-i18n-doctitle="b.title.page">
@@ -46,7 +47,6 @@
         </a>
         <ul id="langSwitch" class="right"><!-- 依 I18n.langs 自動產生 --></ul>
         <ul class="right hide-on-med-and-down">
-          <li><a id="setting-mode" href="#!" title="切換 light / dark"><i class="material-icons">dark_mode</i></a></li>
           <li><a href="./index.html"><i class="material-icons left">spellcheck</i><span data-i18n="b.nav.back">回校正頁</span></a></li>
           <li style="width:16px;">&nbsp;</li>
         </ul>
@@ -123,6 +123,11 @@
       <a href="#!" class="modal-close btn-flat" data-i18n="b.modal.cancel">取消</a>
       <a href="#!" id="nsCreate" class="btn deep-orange waves-effect" data-i18n="b.modal.create">建立</a>
     </div>
+  </div>
+
+  <!-- 右側浮動工具列：主題切換 -->
+  <div id="setting-mode" class="side-tool" title="切換 light / dark">
+    <i class="material-icons" style="font-size: 20px;">dark_mode</i>
   </div>
 
   <script src="./builder.js"></script>
