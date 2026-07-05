@@ -46,7 +46,9 @@ $(function () {
   paintLang();
   $('#langSwitch').on('click', 'a', function (e) {
     e.preventDefault();
-    I18n.set($(this).data('lang'));
+    var code = $(this).data('lang');
+    I18n.set(code);
+    M.toast({ html: I18n.t('toast.lang', { name: I18n.name(code) }), classes: 'teal' });
   });
   // 儲存列狀態以 thunk 記住，切換語系時可重繪
   function setStatus(thunk) {

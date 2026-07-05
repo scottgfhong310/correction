@@ -91,7 +91,9 @@ $(function () {
   paintLang();
   $('#langSwitch').on('click', 'a', function (e) {
     e.preventDefault();
-    I18n.set($(this).data('lang'));
+    var code = $(this).data('lang');
+    I18n.set(code);
+    M.toast({ html: I18n.t('toast.lang', { name: I18n.name(code) }), classes: 'teal' });
   });
   // 切換語系時，重繪由 JS 產生的動態字串（靜態字串已由 I18n.apply 處理）
   function renderDynamic() {

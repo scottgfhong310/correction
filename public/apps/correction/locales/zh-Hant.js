@@ -31,6 +31,7 @@ I18n.register('zh-Hant', {
   'toast.readFailed': '讀取檔案失敗',
   'toast.uploaded': '已上傳至 /upload/correction：{file}',
   'toast.uploadFailed': '上傳失敗：{msg}',
+  'toast.lang': '已切換為 {name}',
   'toast.corrected': '校正完成，共替換 {n} 處',
   'toast.copied': '已複製到剪貼簿',
   'toast.copyFailed': '複製失敗，請手動選取',

@@ -31,6 +31,7 @@ I18n.register('en', {
   'toast.readFailed': 'Failed to read file',
   'toast.uploaded': 'Uploaded to /upload/correction: {file}',
   'toast.uploadFailed': 'Upload failed: {msg}',
+  'toast.lang': 'Switched to {name}',
   'toast.corrected': 'Done — {n} replacement(s)',
   'toast.copied': 'Copied to clipboard',
   'toast.copyFailed': 'Copy failed — please select manually',
