@@ -2,15 +2,14 @@
  * 改寫自 markdown-reader 的共用 side-tool.css。
  * correction 沒有 light / dark 主題，也沒有 --tool-* 色彩變數，
  * 因此這裡就地定義所需變數，並沿用 Materialize teal 作為品牌色，
- * 讓兩顆工具（#setting-file_download、#setting-copy）呈現為
- * 貼齊右側、垂直排列的圓形浮動按鈕（FAB 風格）。
+ * 讓工具（#setting-file_download、#setting-copy…）呈現為
+ * 貼齊右側、垂直居中排列的圓形浮動按鈕（FAB 風格）。
+ * 〔正統〕版：按鈕包進 .side-tools flex 容器，由 flex 自動堆疊（家族 §5.5）。
  */
 
 :root {
-  --tool-top: 30vh;   /* 第一顆 icon 距頁頂的位置 */
   --tool-size: 46px;  /* icon 直徑（即下方 width/height） */
   --tool-gap: 10px;   /* icon 之間的間距 */
-  --tool-step: calc(var(--tool-size) + var(--tool-gap)); /* 相鄰 icon 的 top 位移 */
 
   /* 顏色（teal FAB 風格，白色 icon）。correction 無主題切換，採固定色值。 */
   --tool-bg: #26a69a;        /* Materialize teal */
@@ -19,9 +18,18 @@
   --tool-accent: #00897b;    /* 啟用/強調色 */
 }
 
-.side-tool {
+.side-tools {
   position: fixed;
   right: 16px;
+  top: 50%;
+  transform: translateY(-50%);   /* 垂直居中於畫面右側 */
+  display: flex;
+  flex-direction: column;
+  gap: var(--tool-gap);
+  z-index: 1002;
+}
+
+.side-tool {
   width: var(--tool-size);
   height: var(--tool-size);
   display: flex;
@@ -29,7 +37,6 @@
   justify-content: center;
   border-radius: 50%;
   cursor: pointer;
-  z-index: 1002;
   color: var(--tool-fg);
   background: var(--tool-bg);
   border: 1px solid var(--tool-border);
@@ -52,11 +59,6 @@
   line-height: 1;
 }
 
-/* 由上而下排列 */
-#setting-mode          { top: var(--tool-top); }
-#setting-file_download { top: calc(var(--tool-top) + 1 * var(--tool-step)); }
-#setting-copy          { top: calc(var(--tool-top) + 2 * var(--tool-step)); }
-
 /* toggle 啟用狀態以 accent 色標示（保留以便未來擴充） */
 .side-tool.active {
   color: var(--tool-accent);
@@ -65,7 +67,7 @@
 
 /* 列印時隱藏所有工具 */
 @media print {
-  .side-tool {
+  .side-tools {
     display: none !important;
   }
 }
