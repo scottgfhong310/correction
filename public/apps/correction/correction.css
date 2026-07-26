@@ -5,6 +5,7 @@
 
 /* ===== 主題 token ===== */
 :root, [data-theme="dark"] {
+  color-scheme: dark;   /* 原生 UI（捲軸、表單控件）跟著主題走；漏了深色頁會配一條淺色捲軸 */
   --bg: #0f1115;
   --surface: #161a22;
   --surface-2: #1b2030;
@@ -15,6 +16,7 @@
   --accent-soft: rgba(38, 166, 154, 0.16);
 }
 [data-theme="light"] {
+  color-scheme: light;
   --bg: #f6f8fa;
   --surface: #ffffff;
   --surface-2: #fafafa;
