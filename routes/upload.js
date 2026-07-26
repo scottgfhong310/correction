@@ -1,8 +1,8 @@
 /**
  * upload
  * ------
- * 接收待校正的檔案，存到 public/upload/<folder>/ 下（Correction 用 folder=correction）。
- * 指定 folder 時保留原始檔名；未指定則放到 yyyyMMdd 子資料夾並加上時間前綴避免衝突。
+ * 接收上傳檔案，存到 public/upload/<folder>/ 下（各 app 以 folder=<app-name> 呼叫）。
+ * 指定 folder 時保留原始檔名（同名覆寫）；未指定則放到 yyyyMMdd 子資料夾並加時間前綴避免衝突。
  *
  * 前端以 multipart 欄位名 `myFiles` 上傳（可多檔）。
  */

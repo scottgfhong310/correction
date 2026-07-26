@@ -9,7 +9,7 @@
 
 ```
 app.js                         # Express 入口：port 3000；/ → 302 /apps/correction/
-routes/upload.js               # POST /api/upload?folder=correction（共用最小版；含檔名消毒 sanitizeUploadName，§3.4）
+routes/upload.js               # POST /api/upload?folder=correction（家族共用最小版：權威版＝ nodeapp-webapp-family/routes-upload.js，byte-identical；含檔名消毒 sanitizeUploadName，§3.4）
 routes/correction.js           # GET/PUT /api/correction/...（存校正字集，含 .bak 備份）
 public/apps/correction/        # 前端 + 資料（服務於 /apps/correction/）
 ├─ index.html · correction.css · correction.js · correction-lib.js   # 主頁（校正）
