@@ -14,7 +14,7 @@ routes/correction.js           # GET/PUT /api/correction/...（存校正字集�
 public/apps/correction/        # 前端 + 資料（服務於 /apps/correction/）
 ├─ index.html · correction.css · correction.js · correction-lib.js   # 主頁（校正）
 ├─ correction-data-builder.html · builder.css · builder.js           # 第二頁（編字集）
-├─ side-tool.css · i18n.js · locales/{zh-Hant,en,ja}.js
+├─ side-tool.css · side-tool.js · i18n.js · locales/{zh-Hant,en,ja}.js
 ├─ correction-data.json        # 字集清單
 └─ correction-data/sample.json # 校正字集（前端讀、builder 經 routes/correction.js 寫）
 public/upload/correction/      # 上傳暫存（內容不進版控）

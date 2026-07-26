@@ -27,12 +27,9 @@ let main = {
 
       return;
     },
+    // 「已執行」微回饋走家族共用 side-tool.js（§5.5）；element 是 jQuery 物件，共用件認得
     setIconDone: function (element) {
-      let f_icon = element.find('i').text();
-      element.find('i').text("check");
-      setTimeout(() => {
-        element.find('i').text(f_icon);
-      }, 800);
+      window.SideTool.setIconDone(element);
     },
   },
   init: function () {
