@@ -33,7 +33,7 @@ I18n.register('ja', {
   'toast.uploadFailed': 'アップロードに失敗：{msg}',
   'toast.lang': '{name} に切り替えました',
   'toast.corrected': '校正完了：{n} 件を置換しました',
-  'toast.copied': 'クリップボードにコピーしました',
+  'toast.copied': 'コピーしました',
   'toast.copyFailed': 'コピーに失敗しました。手動で選択してください',
   'toast.downloaded': 'ダウンロードしました：{name}',
 
