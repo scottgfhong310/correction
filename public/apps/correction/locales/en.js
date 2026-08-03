@@ -30,6 +30,7 @@ I18n.register('en', {
   'toast.sourceLoadFailed': 'Failed to load set: {msg}',
   'toast.readFailed': 'Failed to read file',
   'toast.uploaded': 'Uploaded to /upload/correction: {file}',
+  'toast.uploadedRenamed': 'Name already exists — saved as: {n}',
   'toast.uploadFailed': 'Upload failed: {msg}',
   'toast.lang': 'Switched to {name}',
   'toast.corrected': 'Done — {n} replacement(s)',

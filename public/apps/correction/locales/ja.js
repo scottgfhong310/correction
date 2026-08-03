@@ -30,6 +30,7 @@ I18n.register('ja', {
   'toast.sourceLoadFailed': 'セットの読み込みに失敗：{msg}',
   'toast.readFailed': 'ファイルの読み込みに失敗',
   'toast.uploaded': '/upload/correction にアップロードしました：{file}',
+  'toast.uploadedRenamed': '同名のため {n} として保存しました',
   'toast.uploadFailed': 'アップロードに失敗：{msg}',
   'toast.lang': '{name} に切り替えました',
   'toast.corrected': '校正完了：{n} 件を置換しました',

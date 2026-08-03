@@ -30,6 +30,7 @@ I18n.register('zh-Hant', {
   'toast.sourceLoadFailed': '字集載入失敗：{msg}',
   'toast.readFailed': '讀取檔案失敗',
   'toast.uploaded': '已上傳至 /upload/correction：{file}',
+  'toast.uploadedRenamed': '同名已存在，已存為：{n}',
   'toast.uploadFailed': '上傳失敗：{msg}',
   'toast.lang': '已切換為 {name}',
   'toast.corrected': '校正完成，共替換 {n} 處',

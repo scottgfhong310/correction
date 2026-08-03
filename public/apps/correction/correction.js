@@ -205,7 +205,15 @@ $(function () {
       type: 'POST', data: fd, processData: false, contentType: false
     }).done(function (resp) {
       if (resp && resp.ok) {
-        M.toast({ html: I18n.t('toast.uploaded', { file: file.name }), classes: 'green' });
+        // ⚠️ 以伺服器回報的 filename 為準，不可用 file.name——撞名時後端會改名（家族 §3.3）
+        var info = (resp.files && resp.files[0]) || {};
+        var saved = info.filename || file.name;
+        M.toast({
+          html: info.renamed
+            ? I18n.t('toast.uploadedRenamed', { n: saved })
+            : I18n.t('toast.uploaded', { file: saved }),
+          classes: 'green'
+        });
       } else {
         M.toast({ html: I18n.t('toast.uploadFailed', { msg: (resp && resp.error) || I18n.t('error.unknown') }), classes: 'orange' });
       }
