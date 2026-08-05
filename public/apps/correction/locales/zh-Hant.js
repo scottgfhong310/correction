@@ -6,6 +6,7 @@ I18n.register('zh-Hant', {
   'btn.run': '執行校正',
   'btn.reload': '重新載入',
   'btn.reloadTitle': '重新載入目前使用的校正資料來源',
+  'tool.more': '更多工具',
   'card.original': '原始內容',
   'card.result': '校正結果',
   'drop.hint': '<i class="material-icons">cloud_upload</i>拖拉檔案到這裡，或<u>點擊選擇檔案</u>上傳至 /upload/correction',

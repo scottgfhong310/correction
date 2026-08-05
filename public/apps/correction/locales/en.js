@@ -6,6 +6,7 @@ I18n.register('en', {
   'btn.run': 'Run correction',
   'btn.reload': 'Reload',
   'btn.reloadTitle': 'Reload the correction set currently in use',
+  'tool.more': 'More tools',
   'card.original': 'Original',
   'card.result': 'Result',
   'drop.hint': '<i class="material-icons">cloud_upload</i>Drag a file here, or <u>click to choose a file</u> — uploaded to /upload/correction',

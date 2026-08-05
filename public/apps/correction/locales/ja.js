@@ -6,6 +6,7 @@ I18n.register('ja', {
   'btn.run': '校正を実行',
   'btn.reload': '再読み込み',
   'btn.reloadTitle': '現在使用中の校正セットを再読み込み',
+  'tool.more': 'その他のツール',
   'card.original': '元のテキスト',
   'card.result': '校正結果',
   'drop.hint': '<i class="material-icons">cloud_upload</i>ここにファイルをドラッグ、または<u>クリックして選択</u> — /upload/correction にアップロード',
